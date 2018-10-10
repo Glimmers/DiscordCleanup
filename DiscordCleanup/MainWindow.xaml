@@ -1,0 +1,93 @@
+﻿<Window x:Name="Discord_Cleanup" x:Class="DiscordCleanup.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiscordCleanup"
+        mc:Ignorable="d"
+        Title="Discord Cleanup" Height="600" Width="800" Closing="Discord_Cleanup_Closing">
+    <Grid x:Name="AppDivider">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="StepBar" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="StepStart" Grid.Column="0" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+                <TextBlock Text="Start" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
+            </Grid>
+            <Grid x:Name="StepGatherInfo" Grid.Column="0" Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Width="150">
+                <TextBlock Text="Gathering Info" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" />
+            </Grid>
+            <Grid x:Name="StepRunning" Grid.Column="0" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Width="150">
+                <TextBlock Text="Cleaning" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" />
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="3" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Width="150">
+
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="AppBody" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="75" />
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="ProgramHeader" Grid.Column="0" Grid.Row="0">
+                <TextBlock Text="Unofficial Discord Cleanup" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Margin="0,10,0,0" />
+            </Grid>
+            
+            <Grid x:Name="StartPane" Grid.Column="0" Grid.Row="1" IsVisibleChanged="OnStartPane">
+                <TextBlock x:Name="ShortDescription" Text="This program will remove any corrupt Discord installations. This will delete all files in your Discord folder, remove desktop and start menu shortcuts." TextWrapping="Wrap" VerticalAlignment="Top" Margin="50,25,50,0" />
+                <TextBox x:Name="LicenseText" Margin="50,100,50,75" TextWrapping="Wrap" Text="" FontFamily="Tahoma" AllowDrop="False" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                <CheckBox x:Name="ReadAndAgreeConditions" HorizontalAlignment="Left" Margin="50,0,0,25" VerticalAlignment="Bottom" Checked="OnReadTOCChanged" Unchecked="OnReadTOCChanged" />
+                <TextBlock x:Name="ReadLicense" Text="I've read and agree with the Terms and Conditions" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="75,0,0,25" />
+            </Grid>
+
+            <Grid x:Name="GatherInfoPane" Grid.Column="0" Grid.Row="1" Visibility="Hidden" IsEnabled="False" IsVisibleChanged="OnGatherInfo">
+                <TextBlock x:Name="TextProcessesFound" Text="Discord processes found" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,25,0,0" MinHeight="50"/>
+                <TextBox x:Name="ProcessesFound" Margin="50,50,50,100" TextWrapping="Wrap" Text="" FontFamily="Tahoma" AllowDrop="False" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top"/>
+                <TextBlock x:Name="TextFilesFound" Text="Discord files found" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,125,0,0"/>
+                <TextBox x:Name="FilesFound" Margin="50,150,50,125" TextWrapping="Wrap" Text="" FontFamily="Tahoma" AllowDrop="False" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top"  MinHeight="50"/>
+                <CheckBox x:Name="DownloadAndInstall" HorizontalAlignment="Left" Margin="50,0,0,75" VerticalAlignment="Bottom" IsEnabled="True" Checked="OnDownloadAndInstallChecked" Unchecked="OnDownloadAndInstallUnchecked" IsChecked="True" />
+                <TextBlock x:Name="TextDownloadAndInstall" Text="Download and Install a fresh copy of Discord" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="75,0,0,75" />
+                <CheckBox x:Name="KeepInstaller" HorizontalAlignment="Left" Margin="50,0,0,50" VerticalAlignment="Bottom" IsEnabled="True" Checked="OnKeepInstallerChanged" Unchecked="OnKeepInstallerChanged" />
+                <TextBlock x:Name="TextKeepCopy" Text="Keep the copy of the Discord Installer after program exits" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="75,0,0,50"/>
+                <Button x:Name="ButtonChooseFile" Content="Choose Location" HorizontalAlignment="Right" Margin="0,0,50,50" VerticalAlignment="Bottom" IsEnabled="False" Visibility="Hidden" Click="OnChooseFile"/>
+                <CheckBox x:Name="UnderstandDeleteFiles" HorizontalAlignment="Left" Margin="50,0,0,25" VerticalAlignment="Bottom" IsEnabled="True" Checked="OnUnderstandChanged" Unchecked="OnUnderstandChanged"/>
+                <TextBlock x:Name="TextUnderstandDeleteFiles" Text="I understand that this program will delete my current Discord installation." HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="75,0,0,25"/>
+            </Grid>
+
+            <Grid x:Name="RunningPane" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" Visibility="Hidden" IsEnabled="False" IsVisibleChanged="OnRunningVisible">
+
+                <Grid x:Name="DeleterBlock">
+                    <TextBlock x:Name="FilesDeletedHeader" Text="Files Deleted" TextWrapping="Wrap" VerticalAlignment="Top" Margin="50,50,50,0" />
+                    <ProgressBar x:Name="FileDeletionProgress" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,75,50,0" Height="25" />
+                    <TextBlock x:Name="FilesDeleted" Cursor="None" Text="0 / 0" TextWrapping="Wrap" VerticalAlignment="Top" Margin="50,100,50,0" />
+                </Grid>
+
+                <Grid x:Name="InstallerBlock" Visibility="Hidden">
+                    <TextBlock x:Name="InstallerProgressHeader" Text="Installer Download Progress" TextWrapping="Wrap" VerticalAlignment="Top" Margin="50,150,50,0" />
+                    <ProgressBar x:Name="InstallerDownloadProgress" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,175,50,0" Height="25" />
+                    <TextBlock x:Name="InstallerBytesReceived" Cursor="None" Text="0 / 0" TextWrapping="Wrap" VerticalAlignment="Top" Margin="50,200,50,0" />
+                    <TextBlock x:Name="InstallerError" Cursor="None" Text="" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,225,100,0" Visibility="Hidden" />
+                    <Button x:Name="ButtonRetry" Content="Retry" HorizontalAlignment="Right" Margin="0,225,50,0" VerticalAlignment="Top" Width="50" IsEnabled="False" Visibility="Hidden" Click="OnRetry"/>
+                    <Button x:Name="ButtonLaunch" Content="Launch Installer" HorizontalAlignment="Left" Margin="50,250,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False" Visibility="Hidden" Click="OnLaunch"/>
+                </Grid>
+            </Grid>
+
+            <Button x:Name="ButtonBack" Content="Back" HorizontalAlignment="Right" Margin="0,0,120,0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Width="75" IsEnabled="False" Click="OnBackButton"/>
+            <Button x:Name="ButtonNext" Content="Next" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Width="75" IsEnabled="False" Click="OnNextButton"/>
+
+
+        </Grid>
+    </Grid>
+</Window>

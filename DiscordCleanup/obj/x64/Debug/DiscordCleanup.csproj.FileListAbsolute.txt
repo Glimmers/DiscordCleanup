@@ -1,0 +1,14 @@
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\bin\x64\Debug\DiscordCleanup.exe.config
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\bin\x64\Debug\DiscordCleanup.exe
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\bin\x64\Debug\DiscordCleanup.pdb
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\MainWindow.g.cs
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\App.g.cs
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup_MarkupCompile.cache
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup_MarkupCompile.lref
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\MainWindow.baml
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup.g.resources
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup.Properties.Resources.resources
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup.csproj.GenerateResource.cache
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup.csproj.CoreCompileInputs.cache
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup.exe
+C:\Users\kes\Documents\Visual Studio 2017\Projects\DiscordCleanup\DiscordCleanup\obj\x64\Debug\DiscordCleanup.pdb
