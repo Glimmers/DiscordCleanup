@@ -15,16 +15,21 @@ namespace DiscordCleanup
         Uri _installerURI;
         WebClient _downloader;
         Process _installerProcess;
+        string _tempFile;
 
+        public bool UseFilePath { get; set; }
         public string SavePath { get; set; }
         public string SaveFile { get; set; }
         public string FullPath => Path.Combine(SavePath, SaveFile);
+        public string InstallerFile => UseFilePath ? FullPath : _tempFile;
 
         public InstallerWrap(string uri)
         {
             _installerURI = new Uri(uri);
             SavePath = Path.GetTempPath();
             SaveFile = Path.GetRandomFileName();
+            SaveFile = Path.ChangeExtension(SaveFile, "exe");
+            _tempFile = FullPath;
             _downloader = new WebClient();
             _downloader.Headers["User-Agent"] = "Unofficial Discord Cleanup";
         }
@@ -34,8 +39,8 @@ namespace DiscordCleanup
         {
             _downloader.DownloadProgressChanged += onData;
             _downloader.DownloadFileCompleted += onFinish;
-            
-            _downloader.DownloadFileAsync(_installerURI, FullPath);
+
+            _downloader.DownloadFileAsync(_installerURI, InstallerFile);
         }
 
         public Task RunInstaller()
@@ -44,7 +49,7 @@ namespace DiscordCleanup
 
             return Task.Run(() =>
             {
-                _installerProcess = Process.Start(FullPath);
+                _installerProcess = Process.Start(InstallerFile);
                 _installerProcess.WaitForExit();
             });
 
@@ -52,9 +57,9 @@ namespace DiscordCleanup
 
         public void DeleteInstaller()
         {
-            if (File.Exists(FullPath))
+            if (File.Exists(InstallerFile))
             {
-                File.Delete(FullPath);
+                File.Delete(InstallerFile);
             }
         }
 

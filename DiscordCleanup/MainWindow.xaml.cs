@@ -31,6 +31,9 @@ namespace DiscordCleanup
         InstallerWrap _discordInstaller;
         ProcessManager _discordProcess;
 
+        string _installerFile;
+        string _installerDirectory;
+
         bool _installNewCopy = true;
         bool _downloadFinished = false;
         bool _filesDeleted = false;
@@ -45,6 +48,9 @@ namespace DiscordCleanup
 
             _discordInstaller = new InstallerWrap(AppConfig.DiscordURI);
             _discordProcess = new ProcessManager(AppConfig.FriendlyName);
+
+            _installerFile = "Discord Setup.exe";
+            _installerDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             InitializeComponent();
 
@@ -134,6 +140,7 @@ namespace DiscordCleanup
             ActivateText(TextKeepCopy);
 
             _keepInstall = (bool)KeepInstaller.IsChecked;
+            _discordInstaller.UseFilePath = _keepInstall;
         }
 
         private void OnDownloadAndInstallUnchecked(object sender, RoutedEventArgs e)
@@ -147,6 +154,7 @@ namespace DiscordCleanup
         private void OnKeepInstallerChanged(object sender, RoutedEventArgs e)
         {
             _keepInstall = (bool)KeepInstaller.IsChecked;
+            _discordInstaller.UseFilePath = _keepInstall;
             ButtonChooseFile.Visibility = _keepInstall ? Visibility.Visible : Visibility.Hidden;
             ButtonChooseFile.IsEnabled = _keepInstall;
         }
@@ -194,16 +202,13 @@ namespace DiscordCleanup
 
         private void OnChooseFile(object sender, RoutedEventArgs e)
         {
-            string fileName = "DiscordInstaller.exe";
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
             var saveBox = new Microsoft.Win32.SaveFileDialog
             {
                 AddExtension = true,
                 DefaultExt = "exe",
-                FileName = fileName,
+                FileName = _installerFile,
                 Filter = "Executable Files|*.exe",
-                InitialDirectory = directory,
+                InitialDirectory = _installerDirectory,
                 OverwritePrompt = true,
                 ValidateNames = true
             };
@@ -218,7 +223,7 @@ namespace DiscordCleanup
             if (!choseFile)
             {
                 _discordInstaller.SavePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                _discordInstaller.SaveFile = "DiscordInstaller.exe";
+                _discordInstaller.SaveFile = "Discord Setup.exe";
             }
         }
 
